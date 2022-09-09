@@ -9,7 +9,6 @@ class ColWidth:
     def __init__(self,col_width) -> None:
         self.col_width = col_width
     
-    
     def total_col_width(self):
         width = 0
         for k,v in self.col_width.items():
