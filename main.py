@@ -4,42 +4,46 @@ ap = argparse.ArgumentParser()
 ap.add_argument("-f", "--file", required=True, help="csv file")
 args = vars(ap.parse_args())
 
-class TextTable:
-    def __init__(self,rows):
-        self.rows = rows
-        self.total_no_colums = len(self.rows[0].split(","))
-        self.space_between = 2
-        self.width_border_length = self.get_longest_row_lenght() + self.space_between * self.total_no_colums + self.total_no_colums + 1
 
-    def __repr__(self):
-        return(f"{self.rows}")
+class ColWidth:
+    def __init__(self,col_width) -> None:
+        self.col_width = col_width
     
-    def generate_table(self):
-        print('-' * self.width_border_length)
-        for row in self.rows:
-            for col in row.split(","):
-                print('|','' * self.space_between,col.strip(), '' * self.space_between,end="")
-            print('' * self.space_between,'|',end='')
-            print()
-            print('-' * self.width_border_length)
-    def get_longest_row_lenght(self):
-        longest_row = max(self.rows,key=len)
-        return len(longest_row)
+    
+    def total_col_width(self):
+        width = 0
+        for k,v in self.col_width.items():
+            width += v
+        
+        return width + len(self.col_width) * 3 + 1
 
-
-def run():
-    headers = None
+with open(args['file'],'r') as f:
+    col_width = {}
     rows = []
-    with open( args['file'], 'r') as f:        
-        while True:
-            row = f.readline().strip()
-            if not row:
-                break
-            rows.append(row)
-    text_table = TextTable(rows)
-    print(text_table.total_no_colums)
-    print(text_table.width_border_length)
-    text_table.generate_table()
+    while True:
+        row = f.readline().strip()
+        rows.append(row)
+        if not row:
+            break
+        
+        cols = row.split(',')
+        for i,col in enumerate(cols):            
+            if i in col_width:
+                if col_width[i] < len(col):
+                    col_width[i] = len(col)
+            else:
+                col_width[i] = len(col)
 
-if __name__ == "__main__":
-    run()
+    colw = ColWidth(col_width)
+    x = '-' * colw.total_col_width()
+    for i,row in enumerate(rows):
+        if not row:
+            break
+        cols = row.split(',')
+        print(f'{x:<{colw.total_col_width()}}')
+        for i,col in enumerate(cols):
+            print(f'| {col:<{col_width[i]}} ',end='')
+        print("|",end='')
+        print()
+    
+    print(f'{x:<{colw.total_col_width()}}')
