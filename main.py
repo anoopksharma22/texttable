@@ -1,5 +1,5 @@
 import argparse
-ap = argparse.ArgumentParser()
+ap = argparse.ArgumentParser(description="Prints the csv file in tabular form")
 
 ap.add_argument("-f", "--file", required=True, help="csv file")
 args = vars(ap.parse_args())
