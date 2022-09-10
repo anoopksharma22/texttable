@@ -24,3 +24,8 @@ output
 | 3         | Anastazja  | Sobczak   | ul. Kaktusowa 72 85-485 Bydgoszcz         |
 ----------------------------------------------------------------------------------
 ```
+
+## Run web app
+```
+python app.py
+```
