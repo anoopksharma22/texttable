@@ -29,23 +29,29 @@ def total_col_width(col_width):
         for k,v in col_width.items():
             width += v
         
-        return width + len(col_width) * 3 + 1 #Not sure about adding this 1
+        return width + len(col_width) * 3 + 1 #Not sure about adding this 1, but it works
 
 def run():
+    table_output = ""
     rows, col_width = read_file()    
     x = '-' * total_col_width(col_width)
     for i,row in enumerate(rows):
         if not row:
             break
         cols = row.split(',')
-        print(f'{x:<{total_col_width(col_width)}}')
+        # print(f'{x:<{total_col_width(col_width)}}')
+        table_output += f'{x:<{total_col_width(col_width)}}' + "\n"
         for i,col in enumerate(cols):
-            print(f'| {col:<{col_width[i]}} ',end='')
-        print("|",end='')
-        print()
+            # print(f'| {col:<{col_width[i]}} ',end='')
+            table_output += f'| {col:<{col_width[i]}} '
+        # print("|",end='')
+        table_output += "|"
+        # print()
+        table_output += "\n"
 
-    print(f'{x:<{total_col_width(col_width)}}')
-
+    # print(f'{x:<{total_col_width(col_width)}}')
+    table_output += f'{x:<{total_col_width(col_width)}}' + "\n"
+    print(table_output)
 
 if __name__ == "__main__":
     run()
