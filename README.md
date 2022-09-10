@@ -10,7 +10,7 @@ Serial No,First Name,Last Name,Address
 3,Anastazja,Sobczak,ul. Kaktusowa 72 85-485 Bydgoszcz
 ```
 
-```python main.py -f demo.csv```
+```python /cmd/main.py -f demo.csv```
 
 output
 ```
